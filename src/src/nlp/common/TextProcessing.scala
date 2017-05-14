@@ -9,11 +9,11 @@ import language.postfixOps
 object TextProcessing extends PreProcessPipeline[List[RawFile], List[ProcessedFile]]{
 
 
-  val processingPipeline = Cleanser andThen Tokenizer andThen Stopwords
+  val preProcessPipeline = Cleanser andThen Tokenizer andThen Stopwords
 
   def run(ctx: PreProcessContext)(files: List[RawFile]): List[ProcessedFile] = {
     files.map(file => {
-      val processedContents = processingPipeline.run()(file.contents)
+      val processedContents = preProcessPipeline.run(ctx)(file.contents)
       ProcessedFile(file.name, processedContents)
     })
   }
